@@ -101,6 +101,7 @@ class Handle {
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $attachment);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_exec($curl);
         }
     }

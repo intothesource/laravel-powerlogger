@@ -35,7 +35,7 @@ class PowerloggerServiceProvider extends ServiceProvider
     public function register()
     {
         config([
-            'powerlogger' => include('config/powerlogger.php'),
+            'config/powerlogger.php',
         ]);
     }
 }
