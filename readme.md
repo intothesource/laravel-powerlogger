@@ -27,10 +27,12 @@ php artisan vendor:publish
 #### Edit the config file
 Edit the config file: config/powerlogger.php
 ```php
-#### Creating the config file
-Run the following command:
-```bash
-php artisan vendor:publish
+<?php
+	return [
+	   'customer' => 'Customer Name',           // Customer name eg. Into The Source
+       'domain'   => 'test.dev',                // FQDN eg intothesource.com
+       'slack'    => 'AAA/BBB/123'              // Slack key
+	];
 ```
 
 #### Error handling
@@ -38,3 +40,4 @@ Add the following line in the 'report' method in the file app\Exceptions\Handler
 ```bash
 \IntoTheSource\Powerlogger\Handle::init($e);
 ```
+
