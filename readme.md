@@ -1,4 +1,5 @@
 ## Laravel Powerlogger 
+
 Laravel Powerlogger, logs errors to Slack
 
 ## Install
@@ -10,11 +11,22 @@ composer require intothesource/powerlogger
 
 #### ServiceProvider
 Add the following line to "config/app.php"
+
 at "providers":
+
 ```bash
 IntoTheSource\Powerlogger\PowerloggerServiceProvider::class,
 ```
 
+#### Creating the config file
+Run the following command:
+```bash
+php artisan vendor:publish
+```
+
+#### Edit the config file
+Edit the config file: config/powerlogger.php
+```php
 #### Creating the config file
 Run the following command:
 ```bash
