@@ -10,7 +10,7 @@ class Handle {
     {
         $request = request();
 
-        if (env('APP_ENV', 'production') === 'local')
+        if (env('APP_ENV', 'production') === 'production')
         {
             
             $message = [
