@@ -5,21 +5,28 @@ namespace IntoTheSource\Powerlogger;
 use Config;
 
 class Handle {
-    
+
     public static function init(\Exception $e)
     {
         $request = request();
 
         if (env('APP_ENV', 'production') === 'production')
         {
-            
+
+            if($e instanceof NotFoundHttpException)
+            {
+                $stauts = $e->getStatusCode();
+            } else {
+                $status = 404;
+            }
+
             $message = [
                 'text' => 'Logmelding van ' . config('powerlogger.customer') . ' [ '. config('powerlogger.domain') . ' ]',
                 'name' => 'IntoTheLogBot',
                 'fields' => [
                     [
                         'title' => 'Foutcode',
-                        'value' => $e->getStatusCode(),
+                        'value' => $status,
                         'short' => true
                     ],
                     [
@@ -34,7 +41,7 @@ class Handle {
                     ]
                 ]
             ];
-            
+
             if ( ! empty($e->getMessage()))
             {
                 $message['fields'][] = [
@@ -43,17 +50,17 @@ class Handle {
                     'short' => true
                 ];
             }
-            
-            if ( ! empty(url()->previous()))
+
+            if ( ! empty($request->server('HTTP_REFERER')))
             {
                  $message['fields'][] = [
                     'title' => 'Referrer',
-                    'value' => url()->previous(),
+                    'value' => $request->server('HTTP_REFERER'),
                     'short' => true
                 ];
             }
 
-            if ($request->route() !== null) 
+            if ($request->route() !== null)
             {
                 $message['fields'][] = [
                     'title' => 'Route',
@@ -77,7 +84,7 @@ class Handle {
                 ];
             }
 
-            switch ($e->getStatusCode()):
+            switch ($status):
                 default:
                 case 404:
                     $message['color'] = 'warning';
@@ -89,11 +96,10 @@ class Handle {
             endswitch;
 
             $attachment = json_encode($message);
-
             $curl = curl_init();
-
             curl_setopt($curl, CURLOPT_URL, 'https://hooks.slack.com/services/' . config('powerlogger.slack'));
             curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $attachment);
             curl_exec($curl);
         }
