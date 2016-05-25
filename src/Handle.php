@@ -10,7 +10,7 @@ class Handle {
     {
         $request = request();
 
-        if (env('APP_ENV', 'production') === 'production')
+        if (in_array(env('APP_ENV', 'production'), config('powerlogger.accept_env')))
         {
 
             if($e instanceof NotFoundHttpException)
