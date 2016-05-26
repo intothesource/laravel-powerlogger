@@ -6,5 +6,18 @@
        'accept_env' => [						  // Add the environment when the system needs to log
        		'production',
        		'local'
+       ],
+
+       /**
+        * Fire is found here.  
+        * Just enter any word/domain/directory you want
+        *
+        * Filters on request url and referer url!
+        */
+       'filters' => [							  // Filter these url's and/or referers (Using: builded PCRE)
+       		// 'www.google.com',
+       		// 'internal.site.org',
+       		// 'old/images/ico.png',
+       		// 'non-exist-dir'
        ]
 	];

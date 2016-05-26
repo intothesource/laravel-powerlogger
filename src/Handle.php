@@ -95,6 +95,25 @@ class Handle {
                 break;
             endswitch;
 
+            foreach(config('powerlogger.filters') as $filter)
+            {
+                $filter = str_replace('.', '/.', $filter);
+                $filter = str_replace('/', '', $filter);
+                
+                if(preg_match('/'.$filter.'/mi', $request->url()))
+                {
+                    return false; //Stopping the logger here, because we dont want to log this
+                }
+
+                if ( ! empty($request->server('HTTP_REFERER')))
+                {
+                    if(preg_match('/'.$filter.'/mi', $request->server('HTTP_REFERER')))
+                    {
+                        return false; //Stopping the logger here, because we dont want to log this
+                    }
+                }
+            }
+
             $attachment = json_encode($message);
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_URL, 'https://hooks.slack.com/services/' . config('powerlogger.slack'));
