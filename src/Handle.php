@@ -97,8 +97,9 @@ class Handle {
 
             foreach(config('powerlogger.filters') as $filter)
             {
+                // $filter = str_replace('/', '\/', $filter);
                 $filter = str_replace('.', '/.', $filter);
-                $filter = str_replace('/', '', $filter);
+                $filter = str_replace('/', '\/', $filter)
                 
                 if(preg_match('/'.$filter.'/mi', $request->url()))
                 {
