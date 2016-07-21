@@ -1,6 +1,6 @@
 {
     "name": "intothesource/powerlogger",
-    "version": "1.0.0",
+    "version": "1.0.7",
     "description": "Powerlogger for our laravel CMS",
     "keywords": ["laravel", "powerlogger", "login", "password", "reset", "thesource", "intothesource"],
     "homepage": "https://github.com/intothesource/laravel-powerlogger",
