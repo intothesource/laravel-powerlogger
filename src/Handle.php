@@ -60,6 +60,30 @@ class Handle {
                 ];
             }
 
+            if ( ! empty($request->server('REMOTE_ADDR')))
+            {
+                $url = 'http://ip-api.com/json/'.$request->server('REMOTE_ADDR').'?fields=country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,reverse,mobile,proxy,query,status,message';
+                $json = json_decode(file_get_contents($url), true);
+
+                $message['fields'][] = [
+                    'title' => 'IP',
+                    'value' => $request->server('REMOTE_ADDR'),
+                    'short' => true
+                ];
+
+                $message['fields'][] = [
+                    'title' => 'IP - info',
+                    'value' => $json['org'] . ' | ' . $json['regionName'] . ' | ' . $json['reverse'],
+                    'short' => true
+                ];
+
+                $message['fields'][] = [
+                    'title' => 'IP Acties',
+                    'value' => '<https://http-tarpit.org/api.php?add='.$request->server('REMOTE_ADDR').'&reason=Hackbot|Blokkeer> of <https://http-tarpit.org/api.php?remove='.$request->server('REMOTE_ADDR').'|Deblokeer>',
+                    'short' => true
+                ];
+            }
+
             if ($request->route() !== null)
             {
                 $message['fields'][] = [
