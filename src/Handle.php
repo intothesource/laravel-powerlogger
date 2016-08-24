@@ -122,26 +122,18 @@ class Handle
                         $logIPAddress = true;
                     }
 
-                    if (preg_match('/' . $filter . '/mi', $request->url())) {
+                    if (stripos($request->url(), $filter)) {
                         $touchedFilter = true;
                     }
 
                     if (!empty($request->server('HTTP_REFERER'))) {
-                        if (preg_match('/' . $filter . '/mi', $request->server('HTTP_REFERER'))) {
+                        if (stripos($request->server('HTTP_REFERER'), $filter)) {
                             $touchedFilter = true;
                         }
                     }
             }
 
-            if ($logIPAddress) {
-                $message['fields'][] = [
-                    'title' => 'IP Address',
-                    'value' => $request->ip(),
-                    'short' => true,
-                ];
-            }
-
-            if ($touchedFilter && !$logIPAddress) {
+            if ($touchedFilter) {
                 return false; //Stopping the logger here, because we don't want to log this.
             }
 
