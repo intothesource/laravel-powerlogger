@@ -137,12 +137,12 @@ class Handle
                 return false; //Stopping the logger here, because we don't want to log this.
             }
 
-            if(stripos($request->url(), 'wp-') != false AND stripos($request->url(), '.php') != false)
+            if(isset($request->url()))
             {   
                 if ( ! empty($request->server('REMOTE_ADDR')))
                 {
                     $curl = curl_init();
-                    curl_setopt($curl, CURLOPT_URL, 'https://http-tarpit.org/api.php?add=' . $request->server('REMOTE_ADDR') . '&reason=Auto_Wordpress_block&auto=true&via='.config('powerlogger.domain'));
+                    curl_setopt($curl, CURLOPT_URL, 'https://http-tarpit.org/api.php?add=' . $request->server('REMOTE_ADDR') . '&auto=true&via='.config('powerlogger.domain').'&url='.$request->url());
                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                     curl_exec($curl);
