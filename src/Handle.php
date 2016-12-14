@@ -14,7 +14,7 @@ class Handle
         if (in_array(env('APP_ENV', 'production'), config('powerlogger.accept_env'))) {
 
             if ($e instanceof NotFoundHttpException) {
-                $stauts = $e->getStatusCode();
+                $status = $e->getStatusCode();
             } else {
                 $status = 404;
             }
