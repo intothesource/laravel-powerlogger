@@ -64,7 +64,7 @@ class Handle
 
                 $message['fields'][] = [
                     'title' => 'IP',
-                    'value' => $request->server('REMOTE_ADDR'),
+                    'value' => '<http://ip-api.com/#' . $request->server('REMOTE_ADDR') . '|' . $request->server('REMOTE_ADDR') . '>',
                     'short' => true
                 ];
 
